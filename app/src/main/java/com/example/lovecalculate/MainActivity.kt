@@ -2,18 +2,21 @@ package com.example.lovecalculate
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.lovecalculate.databinding.ActivityMainBinding
-import com.example.lovecalculate.model.User
+import com.example.lovecalculate.remote.User
+import com.example.lovecalculate.remote.RetrofitServise
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+val viewModel : LoveViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -21,23 +24,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         with(binding) {
             btncal.setOnClickListener {
-                RetrofitServise.api.getPercentage(fname.text.toString(), sname.text.toString())
-                    .enqueue(object : Callback<User> {
-                        override fun onResponse(call: Call<User>, response: Response<User>) {
-                            if (response.isSuccessful) {
-                                val user = response.body()
-                                user?.let {
-                                    binding.tvPercentage.text = it.percentage.toString()
-                                }
-                            } else {
+               viewModel.getLiveData(fname.text.toString(),sname.text.toString()).observe(this@MainActivity,
+               Observer {LoveModel ->  Log.e("ololo", "onCreate:$LoveModel. ", ) })
 
-                            }
-                        }
-
-                        override fun onFailure(call: Call<User>, t: Throwable) {
-
-                        }
-                    })
             }
         }
     }

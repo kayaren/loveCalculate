@@ -1,6 +1,5 @@
-package com.example.lovecalculate
+package com.example.lovecalculate.remote
 
-import com.google.gson.Gson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

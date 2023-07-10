@@ -1,10 +1,8 @@
-package com.example.lovecalculate
+package com.example.lovecalculate.remote
 
-import com.example.lovecalculate.model.User
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 
